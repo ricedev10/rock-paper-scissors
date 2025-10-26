@@ -25,6 +25,9 @@
 			padding: 8px 32px;
 			width: 12em;
 		}
+		#how-to-play {
+			margin-top: 5%;
+		}
 
 		#game {
 			display: flex;
@@ -58,6 +61,9 @@
 
 	<div id="home">
 		<button id="start-button">Start Game</button>
+
+		<h3 id="how-to-play">How To Play</h3>
+		<p>Once you press "Start Game", you will have three seconds to choose between rock, paper, or scissors.</p>
 	</div>
 	<div id="game">
 		<h1 class="countdown">3, 2, 1 — Start!</h1>
@@ -72,10 +78,12 @@
 		const homeMenu = document.querySelector("#home");
 		const gameMenu = document.querySelector("#game");
 		const startButton = document.querySelector("#start-button");
+		const buttons = document.querySelectorAll(".rock-paper-scissors button")
 		const countdown = document.querySelector(".countdown")
 		const defaultDisplay = "flex"
 		const hiddenDisplay = "none"
 		const COUNTDOWN_SPEED = 1 // wait _ seconds between each interval
+		let current_choice = "none" // can be "rock", "paper", or "scissors" (or "none")
 
 		// Set default visibility of menus
 		homeMenu.style.display = defaultDisplay
@@ -89,6 +97,9 @@
 		}
 
 		// 
+		function buttonClicked(className) {
+			current_choice = className;
+		}
 		function startButtonClicked() {
 			homeMenu.style.display = hiddenDisplay;
 			gameMenu.style.display = defaultDisplay;
@@ -96,17 +107,32 @@
 			startGame();
 		};
 		function startGame() {
-			startCountdown(4, (i) => {
-				if (i == 3) {
-					// we reached the last "second"
-					countdown.textContent = "GO!"
-				} else {
-					countdown.textContent = (3 - i).toString();
-				}
-			})
+			const precision = 2;
+			let factor = 10 ** precision;
+
+			// four hundred "ticks"
+			let seconds = 4;
+			let length = 1 + seconds * factor;
+			for (let i = 0; i < length; i ++) {
+				let seconds = i / factor;
+				setTimeout(() => {
+					if (i == length - 1) {
+						// we reached the last "second"
+						if (current_choice == "none") {
+							countdown.textContent = "You lost :(\nDecide quicker next time!"
+						}
+					} else {
+						countdown.textContent = (seconds.toFixed(2)).toString();
+					}
+				}, seconds * 1000)
+			}
 		}
 
 		startButton.addEventListener("click", startButtonClicked)
+		for (i = 0; i < buttons.length; i++) {
+			let button = buttons[i]
+			button.addEventListener("click", () => buttonClicked(button.className))
+		}
 	</script>
 </body>
 </html>
