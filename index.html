@@ -4,8 +4,109 @@
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<title>Rock Paper Scissors</title>
+
+	<style>
+		body {
+			box-sizing: border-box;
+			font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+		}
+
+		#title {
+			text-align: center;
+		}
+
+		#home {
+			display: flex;
+			justify-content: center;
+			align-items: center;
+			flex-direction: column;
+		}
+		#start-button {
+			padding: 8px 32px;
+			width: 12em;
+		}
+
+		#game {
+			display: flex;
+			justify-content: stretch;
+			align-items: stretch;
+			flex-direction: column;
+		}
+		.countdown {
+			text-align: center;
+		}
+		.rock-paper-scissors {
+			display: flex;
+			justify-content: space-between;
+			gap: 24px;
+		}
+		.rock-paper-scissors button {
+			flex: 1;
+			font-size: 24px;
+			padding: 10px 0;
+		}
+		.rock-paper-scissors .rock {
+			margin-left: 10%;
+		}
+		.rock-paper-scissors .scissors {
+			margin-right: 10%;
+		}
+	</style>
 </head>
 <body>
-	
+	<h1 id="title">Rock Paper Scissors</h1>
+
+	<div id="home">
+		<button id="start-button">Start Game</button>
+	</div>
+	<div id="game">
+		<h1 class="countdown">3, 2, 1 — Start!</h1>
+		<div class="rock-paper-scissors">
+			<button class="rock">Rock</button>
+			<button class="paper">Paper</button>
+			<button class="scissors">Scissors</button>
+		</div>
+	</div>
+
+	<script>
+		const homeMenu = document.querySelector("#home");
+		const gameMenu = document.querySelector("#game");
+		const startButton = document.querySelector("#start-button");
+		const countdown = document.querySelector(".countdown")
+		const defaultDisplay = "flex"
+		const hiddenDisplay = "none"
+		const COUNTDOWN_SPEED = 1 // wait _ seconds between each interval
+
+		// Set default visibility of menus
+		homeMenu.style.display = defaultDisplay
+		gameMenu.style.display = hiddenDisplay
+
+		// function for counting down
+		function startCountdown(length, callback) {
+			for (let i = 0; i < length; i++) {
+				setTimeout(() => callback(i), i * COUNTDOWN_SPEED * 1000);
+			}
+		}
+
+		// 
+		function startButtonClicked() {
+			homeMenu.style.display = hiddenDisplay;
+			gameMenu.style.display = defaultDisplay;
+
+			startGame();
+		};
+		function startGame() {
+			startCountdown(4, (i) => {
+				if (i == 3) {
+					// we reached the last "second"
+					countdown.textContent = "GO!"
+				} else {
+					countdown.textContent = (3 - i).toString();
+				}
+			})
+		}
+
+		startButton.addEventListener("click", startButtonClicked)
+	</script>
 </body>
 </html>
