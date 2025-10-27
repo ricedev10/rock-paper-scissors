@@ -1,5 +1,8 @@
 let humanScore = 0;
 let computerScore = 0;
+let ties = 0;
+
+const scores = document.querySelector("#scores");
 
 function getComputerChoice() {
 	let randomRange = Math.floor(1 + Math.random() * 3);
@@ -14,8 +17,10 @@ function getComputerChoice() {
 }
 
 function getHumanChoice() {
-	choice = prompt('Choose "rock", "paper", or "scissors"');
-	switch (choice) {
+	let humanChoice = window.prompt(
+		'enter "rock", "paper", or "scissors"'
+	);
+	switch (humanChoice) {
 		case "rock":
 			return "rock";
 		case "paper":
@@ -32,6 +37,7 @@ function playRound(humanChoice, computerChoice) {
 	console.log(humanChoice, computerChoice);
 	if (humanChoice == computerChoice) {
 		console.log("Tie!");
+		ties += 1;
 	} else if (humanChoice == "rock") {
 		if (computerChoice == "paper") {
 			console.log("You lose! Paper beats rock.");
@@ -55,6 +61,7 @@ function playGame(totalRounds) {
 	// reset scores
 	humanScore = 0;
 	computerScore = 0;
+	ties = 0;
 
 	// play rounds
 	for (let i = 0; i < totalRounds; i++) {
@@ -62,10 +69,14 @@ function playGame(totalRounds) {
 	}
 
 	// tell user the scores
-	console.log(`
-		Human Score | ${humanScore}
-		Computer Score | ${computerScore}
-	`);
+	let output = `
+		Human Score: ${humanScore}
+		Computer Score: ${computerScore}
+
+		Ties: ${ties}
+	`;
+	console.log(output);
+	scores.textContent = output;
 }
 
 playGame(5);
