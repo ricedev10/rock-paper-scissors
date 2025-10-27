@@ -73,66 +73,6 @@
 			<button class="scissors">Scissors</button>
 		</div>
 	</div>
-
-	<script>
-		const homeMenu = document.querySelector("#home");
-		const gameMenu = document.querySelector("#game");
-		const startButton = document.querySelector("#start-button");
-		const buttons = document.querySelectorAll(".rock-paper-scissors button")
-		const countdown = document.querySelector(".countdown")
-		const defaultDisplay = "flex"
-		const hiddenDisplay = "none"
-		const COUNTDOWN_SPEED = 1 // wait _ seconds between each interval
-		let current_choice = "none" // can be "rock", "paper", or "scissors" (or "none")
-
-		// Set default visibility of menus
-		homeMenu.style.display = defaultDisplay
-		gameMenu.style.display = hiddenDisplay
-
-		// function for counting down
-		function startCountdown(length, callback) {
-			for (let i = 0; i < length; i++) {
-				setTimeout(() => callback(i), i * COUNTDOWN_SPEED * 1000);
-			}
-		}
-
-		// 
-		function buttonClicked(className) {
-			current_choice = className;
-		}
-		function startButtonClicked() {
-			homeMenu.style.display = hiddenDisplay;
-			gameMenu.style.display = defaultDisplay;
-
-			startGame();
-		};
-		function startGame() {
-			const precision = 2;
-			let factor = 10 ** precision;
-
-			// four hundred "ticks"
-			let seconds = 4;
-			let length = 1 + seconds * factor;
-			for (let i = 0; i < length; i ++) {
-				let seconds = i / factor;
-				setTimeout(() => {
-					if (i == length - 1) {
-						// we reached the last "second"
-						if (current_choice == "none") {
-							countdown.textContent = "You lost :(\nDecide quicker next time!"
-						}
-					} else {
-						countdown.textContent = (seconds.toFixed(2)).toString();
-					}
-				}, seconds * 1000)
-			}
-		}
-
-		startButton.addEventListener("click", startButtonClicked)
-		for (i = 0; i < buttons.length; i++) {
-			let button = buttons[i]
-			button.addEventListener("click", () => buttonClicked(button.className))
-		}
-	</script>
+	<script src="script.js">Scripting</script>
 </body>
 </html>
