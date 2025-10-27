@@ -16,9 +16,10 @@ function getComputerChoice() {
 	}
 }
 
-function getHumanChoice() {
+function getHumanChoice(currentRound) {
 	let humanChoice = window.prompt(
-		'enter "rock", "paper", or "scissors"'
+		'Enter "rock", "paper", or "scissors"' +
+			(currentRound || "")
 	);
 	switch (humanChoice) {
 		case "rock":
@@ -54,7 +55,19 @@ function playRound(humanChoice, computerChoice) {
 			console.log("You lose! Paper beats rock.");
 			computerScore += 1;
 		}
+	} else if (humanChoice == "scissors") {
+		if (computerChoice == "rock") {
+			console.log("You lose! Rock beats scissors.");
+			computerScore += 1;
+		} else if (computerChoice == "paper") {
+			console.log("You win! Scissors beats paper.");
+			humanScore += 1;
+		}
 	}
+}
+
+function getScoreOutput() {
+	return `Human Score: ${humanScore}\nComputer Score: ${computerScore}\nTies: ${ties}`;
 }
 
 function playGame(totalRounds) {
@@ -65,16 +78,19 @@ function playGame(totalRounds) {
 
 	// play rounds
 	for (let i = 0; i < totalRounds; i++) {
-		playRound(getHumanChoice(), getComputerChoice());
+		playRound(
+			getHumanChoice(
+				`\nRound ${
+					i + 1
+				}\n\n--------\n\n${getScoreOutput()}`
+			),
+			getComputerChoice()
+		);
+		console.log(i);
 	}
 
 	// tell user the scores
-	let output = `
-		Human Score: ${humanScore}
-		Computer Score: ${computerScore}
-
-		Ties: ${ties}
-	`;
+	let output = getScoreOutput();
 	console.log(output);
 	scores.textContent = output;
 }
