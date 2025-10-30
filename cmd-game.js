@@ -6,7 +6,16 @@ let roundsPlayed = 0;
 const scores = document.querySelector("#scores");
 const buttons = document.querySelector(".buttons");
 const results = document.querySelector(".results");
+const playAgain = document.querySelector(".play-again");
 
+playAgain.addEventListener("click", (event) => {
+	playAgain.style.display = "none";
+	while (results.firstChild) {
+		results.removeChild(results.firstChild);
+	}
+
+	resetGame();
+});
 buttons.addEventListener("click", (event) => {
 	// cannot play another round if we already played five
 	if (roundsPlayed >= 5) {
@@ -54,6 +63,7 @@ buttons.addEventListener("click", (event) => {
 		result.textContent = `WINNER: ${winner}`;
 
 		results.appendChild(result);
+		playAgain.style.display = "block";
 	}
 });
 
@@ -157,4 +167,11 @@ function playGame(totalRounds) {
 	let output = getScoreOutput();
 	console.log(output);
 	scores.textContent = output;
+}
+
+function resetGame() {
+	humanScore = 0;
+	computerScore = 0;
+	ties = 0;
+	roundsPlayed = 0;
 }
