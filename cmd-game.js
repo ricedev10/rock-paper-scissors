@@ -3,6 +3,17 @@ let computerScore = 0;
 let ties = 0;
 
 const scores = document.querySelector("#scores");
+const buttons = document.querySelector(".buttons");
+const results = document.querySelector(".results");
+
+buttons.addEventListener("click", (event) => {
+	const humanChoice = event.target.name;
+	if (!humanChoice) return;
+
+	const computerChoice = getComputerChoice();
+
+	playRound(humanChoice, computerChoice);
+});
 
 function getComputerChoice() {
 	let randomRange = Math.floor(1 + Math.random() * 3);
@@ -94,5 +105,3 @@ function playGame(totalRounds) {
 	console.log(output);
 	scores.textContent = output;
 }
-
-playGame(5);
