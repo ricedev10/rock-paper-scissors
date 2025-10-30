@@ -12,7 +12,26 @@ buttons.addEventListener("click", (event) => {
 
 	const computerChoice = getComputerChoice();
 
-	playRound(humanChoice, computerChoice);
+	const winner = playRound(humanChoice, computerChoice);
+
+	// display score
+	const score = document.createElement("li");
+
+	const humanChoiceScore = document.createElement("span");
+	humanChoiceScore.textContent = `YOU: ${humanChoice}`;
+
+	const computerChoiceScore =
+		document.createElement("span");
+	computerChoiceScore.textContent = `Computer: ${computerChoice}`;
+
+	const winnerScore = document.createElement("span");
+	winnerScore.textContent =
+		score.textContent.padEnd(300) + `WINNER: ${winner}`;
+
+	score.appendChild(humanChoiceScore);
+	score.appendChild(computerChoiceScore);
+	score.appendChild(winnerScore);
+	results.appendChild(score);
 });
 
 function getComputerChoice() {
@@ -47,6 +66,8 @@ function getHumanChoice(currentRound) {
 function playRound(humanChoice, computerChoice) {
 	humanChoice = humanChoice.toLowerCase();
 	console.log(humanChoice, computerChoice);
+
+	let winner = "tie";
 	if (humanChoice == computerChoice) {
 		console.log("Tie!");
 		ties += 1;
@@ -54,27 +75,35 @@ function playRound(humanChoice, computerChoice) {
 		if (computerChoice == "paper") {
 			console.log("You lose! Paper beats rock.");
 			computerScore += 1;
+			winner = "computer";
 		} else if (computerChoice == "scissors") {
 			console.log("You win! Rock beats scissors.");
 			humanScore += 1;
+			winner = "you";
 		}
 	} else if (humanChoice == "paper") {
 		if (computerChoice == "rock") {
 			console.log("You win! Paper beats rock.");
 			humanScore += 1;
+			winner = "you";
 		} else if (computerChoice == "scissors") {
 			console.log("You lose! Paper beats rock.");
 			computerScore += 1;
+			winner = "computer";
 		}
 	} else if (humanChoice == "scissors") {
 		if (computerChoice == "rock") {
 			console.log("You lose! Rock beats scissors.");
 			computerScore += 1;
+			winner = "computer";
 		} else if (computerChoice == "paper") {
 			console.log("You win! Scissors beats paper.");
 			humanScore += 1;
+			winner = "you";
 		}
 	}
+
+	return winner;
 }
 
 function getScoreOutput() {
