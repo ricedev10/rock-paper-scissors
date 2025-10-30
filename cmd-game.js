@@ -1,12 +1,18 @@
 let humanScore = 0;
 let computerScore = 0;
 let ties = 0;
+let roundsPlayed = 0;
 
 const scores = document.querySelector("#scores");
 const buttons = document.querySelector(".buttons");
 const results = document.querySelector(".results");
 
 buttons.addEventListener("click", (event) => {
+	// cannot play another round if we already played five
+	if (roundsPlayed >= 5) {
+		return;
+	}
+
 	const humanChoice = event.target.name;
 	if (!humanChoice) return;
 
@@ -32,6 +38,23 @@ buttons.addEventListener("click", (event) => {
 	score.appendChild(computerChoiceScore);
 	score.appendChild(winnerScore);
 	results.appendChild(score);
+
+	// did we already played five rounds? -> tell player winner
+	if (roundsPlayed >= 5) {
+		const result = document.createElement("li");
+		result.style.marginTop = "16px";
+
+		const winner =
+			humanChoice > computerChoice
+				? "YOU!"
+				: computerChoice > humanChoice
+				? "Computer :("
+				: "tie!";
+
+		result.textContent = `WINNER: ${winner}`;
+
+		results.appendChild(result);
+	}
 });
 
 function getComputerChoice() {
@@ -103,6 +126,7 @@ function playRound(humanChoice, computerChoice) {
 		}
 	}
 
+	roundsPlayed++;
 	return winner;
 }
 

@@ -8,3 +8,21 @@ body {
 #title {
 	text-align: center;
 }
+
+.buttons {
+	display: flex;
+	justify-content: center;
+	gap: 8px;
+}
+
+.results {
+	display: flex;
+	flex-direction: column;
+	justify-content: flex-start;
+}
+
+.results > li {
+	display: flex;
+	gap: 15px;
+	align-self: center;
+}
